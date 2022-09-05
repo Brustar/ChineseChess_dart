@@ -16,7 +16,7 @@ class Game {
   List<String> staves = [];
   String stave = "";
   List<List<Chess>> steps = [];
-  late Chess driveChess;
+  Chess driveChess = Chess(-1, -1, "*");
   bool redGo = true;
   Pair tracks = Pair();
 

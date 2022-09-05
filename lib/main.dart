@@ -50,33 +50,29 @@ class MyHomePageState extends State<MyHomePage> {
         GestureDetector(
             child: Scaffold(
                 body: Center(
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      color: Colors.blue,
-                      width: boardWidth,
-                      alignment: Alignment.topLeft,
-                      child: CustomPaint(
-                        painter: Board(game),
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Container(
+                  width: boardWidth,
+                  alignment: Alignment.topLeft,
+                  child: CustomPaint(
+                    painter: Board(game),
+                  ),
+                ),
+                Container(
+                    width: boxWidth + boardPadding,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(5, 0, boardPadding, 0),
+                      child: TextField(
+                        maxLines: 22,
+                        readOnly: true,
+                        decoration: InputDecoration(
+                          hintText: game.stave,
+                          border: const OutlineInputBorder(),
+                        ),
                       ),
-                    ),
-                    Container(
-                        color: Colors.red,
-                        width: boxWidth,
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(0, 0, boardPadding, 0),
-                          child: TextField(
-                            maxLines: 22,
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              hintText: game.stave,
-                              border: const OutlineInputBorder(),
-                            ),
-                          ),
-                        )),
-                  ]),
+                    )),
+              ]),
             )),
             onTapUp: (e) {
               Point p = game.translate(e.localPosition.dx, e.localPosition.dy);
