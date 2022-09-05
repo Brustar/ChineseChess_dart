@@ -45,6 +45,7 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Stack(
       children: <Widget>[
         GestureDetector(
@@ -75,7 +76,8 @@ class MyHomePageState extends State<MyHomePage> {
               ]),
             )),
             onTapUp: (e) {
-              Point p = game.translate(e.localPosition.dx, e.localPosition.dy);
+              Point p = game.translate(e.localPosition.dx, e.localPosition.dy,
+                  size.width, size.height);
               game.start(p);
               if (game.tryEndGame()) {
                 String msg = game.redGo ? "黑" : "紅";

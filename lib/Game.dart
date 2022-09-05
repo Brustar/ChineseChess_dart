@@ -47,7 +47,9 @@ class Game {
     }
   }
 
-  Point translate(double x, double y) {
+  Point translate(double x, double y, double w, double h) {
+    x -= (w - boardWidth - boxWidth - gridSize) / 2;
+    y -= (h - boardHeight) / 2;
     int row = (y - coordinateHeight) ~/ gridSize;
     int col = x ~/ gridSize;
     return Point(row, col);
