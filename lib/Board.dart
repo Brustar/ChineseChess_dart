@@ -274,7 +274,8 @@ class Board extends CustomPainter {
       TextPainter(
           text: TextSpan(
               text: coordinate[i],
-              style: const TextStyle(fontSize: 14.0, color: Colors.grey)),
+              style: const TextStyle(
+                  fontSize: 14.0, color: Colors.grey, fontFamily: "Roboto")),
           textDirection: TextDirection.ltr,
           textAlign: TextAlign.center)
         ..layout(maxWidth: 20.0, minWidth: 20.0)
@@ -288,13 +289,15 @@ class Board extends CustomPainter {
   void drawPossibleStep(Canvas canvas) {
     for (Point p in game.possibleMove) {
       canvas.drawCircle(
-          Offset(p.col * gridSize + boardPadding, p.row * gridSize + boardPadding + coordinateHeight),
+          Offset(p.col * gridSize + boardPadding,
+              p.row * gridSize + boardPadding + coordinateHeight),
           chessRadius / 2,
           _paint
             ..style = PaintingStyle.fill
             ..color = Colors.white);
       canvas.drawCircle(
-          Offset(p.col * gridSize + boardPadding, p.row * gridSize + boardPadding + coordinateHeight),
+          Offset(p.col * gridSize + boardPadding,
+              p.row * gridSize + boardPadding + coordinateHeight),
           chessRadius / 2,
           _paint
             ..style = PaintingStyle.stroke

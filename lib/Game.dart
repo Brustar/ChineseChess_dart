@@ -38,7 +38,9 @@ class Game {
         String p = line[i];
         var value = int.tryParse(p);
         if (value == null) {
-          map.add(Chess(y, x + i, p));
+          if (x + i < 9 && y < 10) {
+            map.add(Chess(y, x + i, p));
+          }
         } else {
           x += value - 1;
         }
