@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 const double chessRadius = 25;
 const double boardWidth = 540;
 const double boardHeight = 650;
