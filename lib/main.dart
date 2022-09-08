@@ -48,6 +48,14 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    TextEditingController use = TextEditingController();
+    use.value = use.value.copyWith(
+      text: game.stave.isEmpty ? "" : game.stave,
+      selection: TextSelection(
+          baseOffset: game.stave.length, extentOffset: game.stave.length),
+      composing: TextRange.empty,
+    );
+
     return Stack(
       children: <Widget>[
         GestureDetector(
@@ -70,10 +78,17 @@ class MyHomePageState extends State<MyHomePage> {
                       child: Column(children: [
                         TextField(
                           maxLines: 22,
+                          controller: use,
                           readOnly: true,
                           decoration: InputDecoration(
-                            hintText: game.stave,
-                            border: const OutlineInputBorder(),
+                            enabledBorder: const OutlineInputBorder(borderRadius: BorderRadius.all(
+                                    Radius.circular(10)),borderSide: BorderSide(
+                                    width: 1, color: Colors.black))),
+                            focusedBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(10)),
+                                borderSide: BorderSide(
+                                    width: 1, color: Colors.black)),
                           ),
                         ),
                         Padding(
