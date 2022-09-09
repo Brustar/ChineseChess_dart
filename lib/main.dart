@@ -81,14 +81,16 @@ class MyHomePageState extends State<MyHomePage> {
                           controller: use,
                           readOnly: true,
                           decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(borderRadius: BorderRadius.all(
-                                    Radius.circular(10)),borderSide: BorderSide(
-                                    width: 1, color: Colors.black))),
+                            enabledBorder: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                borderSide:
+                                    BorderSide(width: 1, color: Colors.black)),
                             focusedBorder: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(10)),
-                                borderSide: BorderSide(
-                                    width: 1, color: Colors.black)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                borderSide:
+                                    BorderSide(width: 1, color: Colors.black)),
                           ),
                         ),
                         Padding(
