@@ -94,28 +94,53 @@ class MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                         Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                                0, boardPadding, 0, 0),
-                            child: MaterialButton(
-                              color: Colors.blue,
-                              textColor: Colors.white,
-                              child: const Text('载入'),
-                              onPressed: () async {
-                                FilePickerResult? result =
-                                    await FilePicker.platform.pickFiles(
-                                  type: FileType.custom,
-                                  allowedExtensions: ['fen'], //筛选文件类型
-                                );
-                                if (result != null) {
-                                  PlatformFile f = result.files.first;
-                                  File file = File(f.path!);
-                                  String fen = await file.readAsString();
-                                  game.drawFromFen(fen);
-                                } else {
-                                  // User canceled the picker
-                                }
-                              },
-                            )),
+                          padding:
+                              const EdgeInsets.fromLTRB(0, boardPadding, 0, 0),
+                          child: Row(
+                            children: [
+                              MaterialButton(
+                                color: Colors.blue,
+                                textColor: Colors.white,
+                                child: const Text('载入'),
+                                onPressed: () async {
+                                  FilePickerResult? result =
+                                      await FilePicker.platform.pickFiles(
+                                    type: FileType.custom,
+                                    allowedExtensions: ['fen'], //筛选文件类型
+                                  );
+                                  if (result != null) {
+                                    PlatformFile f = result.files.first;
+                                    File file = File(f.path!);
+                                    String fen = await file.readAsString();
+                                    game.drawFromFen(fen);
+                                  } else {
+                                    // User canceled the picker
+                                  }
+                                },
+                              ),
+                              MaterialButton(
+                                color: Colors.blue,
+                                textColor: Colors.white,
+                                child: const Text('打谱'),
+                                onPressed: () async {
+                                  FilePickerResult? result =
+                                      await FilePicker.platform.pickFiles(
+                                    type: FileType.custom,
+                                    allowedExtensions: ['fen'], //筛选文件类型
+                                  );
+                                  if (result != null) {
+                                    PlatformFile f = result.files.first;
+                                    File file = File(f.path!);
+                                    String fen = await file.readAsString();
+                                    game.drawFromFen(fen);
+                                  } else {
+                                    // User canceled the picker
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                        )
                       ]),
                     )),
               ]),
