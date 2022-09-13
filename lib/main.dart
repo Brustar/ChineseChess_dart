@@ -97,6 +97,7 @@ class MyHomePageState extends State<MyHomePage> {
                           padding:
                               const EdgeInsets.fromLTRB(0, boardPadding, 0, 0),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               MaterialButton(
                                 color: Colors.blue,
@@ -123,18 +124,17 @@ class MyHomePageState extends State<MyHomePage> {
                                 textColor: Colors.white,
                                 child: const Text('打谱'),
                                 onPressed: () async {
-                                  FilePickerResult? result =
-                                      await FilePicker.platform.pickFiles(
-                                    type: FileType.custom,
-                                    allowedExtensions: ['fen'], //筛选文件类型
-                                  );
+                                  String? result =
+                                      (await FilePicker.platform.saveFile(
+                                    dialogTitle:
+                                        'Please select an output file:',
+                                    fileName: 'gens.txt',
+                                  ));
                                   if (result != null) {
-                                    PlatformFile f = result.files.first;
-                                    File file = File(f.path!);
-                                    String fen = await file.readAsString();
-                                    game.drawFromFen(fen);
+                                    File file = File(result);
+                                    file.writeAsString(game.stave);
                                   } else {
-                                    // User canceled the picker
+                                    // User canceled the saveFile
                                   }
                                 },
                               ),
