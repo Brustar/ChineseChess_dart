@@ -760,6 +760,18 @@ class Game {
     return false;
   }
 
+  void backStep() {
+    print(steps.length);
+    if (steps.length > 1) {
+      steps.removeLast();
+      // map.replaceRange(0, 3, steps.last);
+      staves.removeLast();
+      tracks.clear();
+      redGo = !redGo;
+      print(steps.length);
+    }
+  }
+
   void start(Point p) {
     Chess? chess = targetChess(p);
     bool canGO = containsPM(p);

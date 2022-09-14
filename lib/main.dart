@@ -12,6 +12,7 @@ void main() {
     final win = appWindow;
     const initialSize =
         Size(boardWidth + boxWidth + gridSize, boardHeight + 44);
+    win.title = gameTitle;
     win.size = initialSize;
     win.alignment = Alignment.center; //将窗口显示到中间
     win.show();
@@ -80,13 +81,13 @@ class MyHomePageState extends State<MyHomePage> {
                           maxLines: 22,
                           controller: use,
                           readOnly: true,
-                          decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
+                          decoration: const InputDecoration(
+                            enabledBorder: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
                                 borderSide:
                                     BorderSide(width: 1, color: Colors.black)),
-                            focusedBorder: const OutlineInputBorder(
+                            focusedBorder: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
                                 borderSide:
@@ -99,45 +100,68 @@ class MyHomePageState extends State<MyHomePage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              MaterialButton(
-                                color: Colors.blue,
-                                textColor: Colors.white,
-                                child: const Text('载入'),
-                                onPressed: () async {
-                                  FilePickerResult? result =
-                                      await FilePicker.platform.pickFiles(
-                                    type: FileType.custom,
-                                    allowedExtensions: ['fen'], //筛选文件类型
-                                  );
-                                  if (result != null) {
-                                    PlatformFile f = result.files.first;
-                                    File file = File(f.path!);
-                                    String fen = await file.readAsString();
-                                    game.drawFromFen(fen);
-                                  } else {
-                                    // User canceled the picker
-                                  }
-                                },
-                              ),
-                              MaterialButton(
-                                color: Colors.blue,
-                                textColor: Colors.white,
-                                child: const Text('打谱'),
-                                onPressed: () async {
-                                  String? result =
-                                      (await FilePicker.platform.saveFile(
-                                    dialogTitle:
-                                        'Please select an output file:',
-                                    fileName: 'gens.txt',
-                                  ));
-                                  if (result != null) {
-                                    File file = File(result);
-                                    file.writeAsString(game.stave);
-                                  } else {
-                                    // User canceled the saveFile
-                                  }
-                                },
-                              ),
+                              Column(children: [
+                                MaterialButton(
+                                  color: Colors.blue,
+                                  textColor: Colors.white,
+                                  child: const Text('悔棋'),
+                                  onPressed: () {
+                                    game.backStep();
+                                    setState(() {});
+                                  },
+                                ),
+                                const SizedBox(height: 10),
+                                MaterialButton(
+                                  color: Colors.blue,
+                                  textColor: Colors.white,
+                                  child: const Text('全屏'),
+                                  onPressed: () {
+                                    //game.steps.removeLast();
+                                  },
+                                ),
+                              ]),
+                              Column(children: [
+                                MaterialButton(
+                                  color: Colors.blue,
+                                  textColor: Colors.white,
+                                  child: const Text('载入'),
+                                  onPressed: () async {
+                                    FilePickerResult? result =
+                                        await FilePicker.platform.pickFiles(
+                                      type: FileType.custom,
+                                      allowedExtensions: ['fen'], //筛选文件类型
+                                    );
+                                    if (result != null) {
+                                      PlatformFile f = result.files.first;
+                                      File file = File(f.path!);
+                                      String fen = await file.readAsString();
+                                      game.drawFromFen(fen);
+                                    } else {
+                                      // User canceled the picker
+                                    }
+                                  },
+                                ),
+                                const SizedBox(height: 10),
+                                MaterialButton(
+                                  color: Colors.blue,
+                                  textColor: Colors.white,
+                                  child: const Text('打谱'),
+                                  onPressed: () async {
+                                    String? result =
+                                        (await FilePicker.platform.saveFile(
+                                      dialogTitle:
+                                          'Please select an output file:',
+                                      fileName: '',
+                                    ));
+                                    if (result != null) {
+                                      File file = File(result);
+                                      file.writeAsString(game.stave);
+                                    } else {
+                                      // User canceled the saveFile
+                                    }
+                                  },
+                                ),
+                              ]),
                             ],
                           ),
                         )
