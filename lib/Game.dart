@@ -15,7 +15,7 @@ class Game {
   List<Point> possibleMove = [];
   List<String> staves = [];
   String stave = "";
-  List<List<Chess>> steps = [];
+  List<String> steps = [];
   Chess driveChess = Chess(-1, -1, "*");
   bool redGo = true;
   Pair tracks = Pair();
@@ -23,13 +23,16 @@ class Game {
   void restart() {
     map.clear();
     tracks.clear();
-    staves.clear();
-    steps.clear();
-    redGo = true;
+    // staves.clear();
+    // steps.clear();
+    // redGo = true;
   }
 
   void drawFromFen(String fen) {
     restart();
+    if (steps.isEmpty) {
+      steps.add(fen);
+    }
     List list = fen.split('/');
     int y = 0;
     for (String line in list) {
@@ -744,7 +747,8 @@ class Game {
 
     redGo = !redGo;
     possibleMove.clear();
-    steps.add(map);
+    String m = buildFen();
+    steps.add(m);
     if (attacked(chess)) {
       Chess? king = kingChess(chess);
       king?.attacked = true;
@@ -761,15 +765,78 @@ class Game {
   }
 
   void backStep() {
-    print(steps.length);
     if (steps.length > 1) {
       steps.removeLast();
-      // map.replaceRange(0, 3, steps.last);
+      drawFromFen(steps.last);
       staves.removeLast();
+      genarateStave();
       tracks.clear();
       redGo = !redGo;
-      print(steps.length);
     }
+  }
+
+  String buildFen() {
+    String fen = "";
+    List<List<Chess>> lines = [];
+
+    for (int i = 0; i < 10; i++) {
+      List<Chess> line = [];
+      for (Chess chess in map) {
+        if (chess.row == i) {
+          line.add(chess);
+        }
+      }
+      lines.add(line);
+    }
+    for (List<Chess> lmap in lines) {
+      lmap.sort((a, b) => a.col.compareTo(b.col));
+
+      String sline = "";
+      int i = 0;
+      for (Chess s in lmap) {
+        if (i == 0) {
+          if (s.col > 0) {
+            String tmp = s.col.toString();
+            sline += tmp;
+            sline += s.name;
+          } else {
+            sline += s.name;
+          }
+        } else {
+          int num = s.col - lmap[i - 1].col;
+          if (num > 1) {
+            String tmp = (num - 1).toString();
+            sline += tmp;
+            sline += s.name;
+          } else {
+            sline += s.name;
+          }
+        }
+        i++;
+      }
+      if (sline.isEmpty) {
+        sline = "9";
+      } else {
+        int pos = 0;
+        for (int i = 0; i < sline.length; i++) {
+          String c = sline[i];
+          var value = int.tryParse(c);
+          if (value != null) {
+            pos += value;
+          } else {
+            pos++;
+          }
+        }
+        if (pos < 9) {
+          String ret = (9 - pos).toString();
+          sline += ret;
+        }
+      }
+      fen += '$sline/';
+    }
+    fen.substring(0, fen.length - 1);
+    fen += " b - - 0 1";
+    return fen;
   }
 
   void start(Point p) {
