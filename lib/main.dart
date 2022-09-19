@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/services.dart';
 import 'Board.dart';
 import 'Constant.dart';
 import 'Game.dart';
@@ -115,9 +116,7 @@ class MyHomePageState extends State<MyHomePage> {
                                   color: Colors.blue,
                                   textColor: Colors.white,
                                   child: const Text('全屏'),
-                                  onPressed: () {
-                                    //game.steps.removeLast();
-                                  },
+                                  onPressed: () {},
                                 ),
                               ]),
                               Column(children: [

@@ -860,6 +860,8 @@ class Game {
     } else {
       if (chess != null) {
         if (canSel(chess)) {
+          tracks.clear();
+          possibleMove.clear();
           addTrack(p);
           List<Point> goList = canGoList(chess);
           possibleMove.addAll(goList);
